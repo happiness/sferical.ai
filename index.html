@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sferical AI</title>
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='50'%20fill='black'/%3E%3C/svg%3E">
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      display: grid;
+      grid-template-columns: 1fr minmax(auto, 100ch) 1fr;
+      background:
+        radial-gradient(circle at 35% 40%, rgba(90,150,255,0.45) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(180,90,255,0.35) 0%, transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(0,200,255,0.3) 0%, transparent 65%),
+        radial-gradient(circle at 80% 20%, rgba(255,120,200,0.25) 0%, transparent 55%),
+        linear-gradient(180deg, #141414 0%, #000 100%);
+      background-blend-mode: screen, overlay, overlay, overlay, normal;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .section-header {
+      grid-column: 1 / 4;
+      position: relative;
+      padding: 18rem 0 5rem;
+      display: grid;
+      grid-template-columns: 1fr minmax(auto, 100ch) 1fr;
+      overflow: hidden;
+    }
+
+    .header-inner {
+      grid-column: 2;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+      padding: 0 4rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      line-height: 1.5;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: -0.025em;
+      margin: 1rem 0 0 0;
+    }
+
+    h2 {
+      font-size: 2rem;
+      line-height: 1.5;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: -0.025em;
+      margin: 4rem 0 0 0;
+    }
+
+    main {
+      grid-column: 2;
+      padding: 0 4rem 12rem;
+      text-align: left;
+      animation: fadeIn 1.5s ease-in both;
+      margin-bottom: 8rem; /* Extra space at bottom */
+    }
+
+    p {
+      font-size: 2rem;
+      line-height: 1.6;
+      letter-spacing: -0.025em;
+      margin: 1.5rem 0;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+      padding-bottom: 3px;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      opacity: 1;
+      border-bottom-color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+
+    .contact {
+      font-size: 2rem;
+      line-height: 2.5rem;
+      margin-top: 2.5rem;
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    }
+
+    .contact a {
+      border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .contact a:hover {
+      text-shadow: 0 0 16px rgba(255, 255, 255, 0.9);
+      border-bottom-color: #fff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr minmax(auto, 80ch) 1fr;
+      }
+      .section-header {
+        grid-template-columns: 1fr minmax(auto, 80ch) 1fr;
+        padding: 10rem 0 5rem 0;
+      }
+      .header-inner, main {
+        padding: 0 2rem;
+      }
+      p, h1, h2, .contact { font-size: 1.6rem; }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        grid-template-columns: 1fr minmax(auto, 70ch) 1fr;
+      }
+      .section-header {
+        grid-template-columns: 1fr minmax(auto, 70ch) 1fr;
+        padding: 3rem 0 5rem 0;
+      }
+      .header-inner, main {
+        padding: 0 2rem;
+      }
+      p, h1, h2, .contact { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <section class="section-header">
+    <div class="header-inner">
+      <img alt="Sferical AI" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAABYCAMAAAA0ofWZAAADAFBMVEX///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+/LkhhAAABAHRSTlMABzRhha3B1ePu8vHt1sCshmU4DiRvs+n/8L9/Nl+Kr7y4ub20Exe6w0+Owl0Bvj4eu2bRfB9WGSJ32I1MLdSH6/yfLhYd/mgndZQQIOr9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">
+      <h1>Building the future AI infrastructure for Swedish Industry</h1>
+    </div>
+  </section>
+  <main>
+  <p>Sferical AI is co-founded by AstraZeneca, Ericsson, Saab, SEB and Wallenberg Investments. We are establishing a sovereign AI compute platform in Sweden, powered by NVIDIA’s latest DGX SuperPOD technology, to give our partner companies secure, large-scale access to world-class AI compute.</p>
+  <p>Our goal is to help partners turn AI into measurable business impact. With state-of-the-art compute capacity and shared industrial expertise, Sferical will enable faster R&amp;D, more efficient engineering workflows and support the development of new AI-driven capabilities and applications.</p>
+  <p>Built in Sweden and shaped by leading global companies, we focus on delivery, reliability and long-term value creation. We work closely with partners to test, build and scale solutions that strengthen their competitiveness in a rapidly evolving landscape.</p>
+  <h2>Get in touch</h2>
+  <div class="contact">
+    <a href="mailto:info@sferical.ai">info@sferical.ai</a> &nbsp; | &nbsp; <a href="https://www.linkedin.com/company/sferical-ai/">Job&nbsp;openings</a>
+  </div>
+  </main>
+</body>
+</html>
